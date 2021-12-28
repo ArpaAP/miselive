@@ -34,16 +34,19 @@ const App: React.FC = () => {
   );
 
   const fetchData = async () => {
-    const miseCol = collection(db, "mise");
+    const miseCol = collection(db, "miselive");
     const miseSnapshot = await getDocs(
-      query(miseCol, orderBy("createdAt"), limit(1))
+      query(miseCol, orderBy("createdAt", "desc"), limit(1))
     );
-    const miseDoc = miseSnapshot.docs[0].data();
-    setMiseDoc(miseDoc ?? null);
+    console.log(miseSnapshot.docs);
+    const miseDoc = miseSnapshot.docs[0];
+    if (miseDoc) setMiseDoc(miseDoc.data() ?? null);
   };
 
   useEffect(() => {
     fetchData();
+    const timer = setInterval(fetchData, 5000);
+    return () => clearInterval(timer);
   }, []);
 
   let miseGrade, miseColor, miseTextColor;
@@ -90,10 +93,14 @@ const App: React.FC = () => {
                   <h1 style={{ fontSize: 60 }} className="me-3">
                     {miseGrade}
                   </h1>
-                  <h2>({miseDoc?.value} ㎍/㎥)</h2>
+                  <h2>({Math.trunc(miseDoc?.value * 100) / 100} ㎍/㎥)</h2>
                 </div>
               </Card.Body>
               <Card.Footer className="text-center">
+                <div className="mb-1">
+                  {miseDoc?.createdAt.toDate().toLocaleString()}에 마지막
+                  업데이트
+                </div>
                 <small>
                   ㎍/㎥: 공기 1세제곱미터당 미세먼지 중량(마이크로그램)
                 </small>
