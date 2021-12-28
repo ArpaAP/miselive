@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/miselive/static/css/main.04179b6f.css",
+    "main.js": "/miselive/static/js/main.a2fecb81.js",
+    "index.html": "/miselive/index.html",
+    "main.04179b6f.css.map": "/miselive/static/css/main.04179b6f.css.map",
+    "main.a2fecb81.js.map": "/miselive/static/js/main.a2fecb81.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.04179b6f.css",
+    "static/js/main.a2fecb81.js"
+  ]
+}
